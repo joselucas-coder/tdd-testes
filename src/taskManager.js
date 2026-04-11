@@ -138,3 +138,18 @@ export function filterByPriority(tasks, priority) {
   // Retorna um novo array contendo apenas as tarefas que tem a prioridade pedida
   return tasks.filter((task) => task.priority === priority);
 }
+
+// ------------------------------------------------------------
+// Ordenação
+// ------------------------------------------------------------
+
+export function sortTasks(tasks) {
+  // Pega todas as pendentes
+  const pending = tasks.filter((task) => task.completed === false);
+  
+  // Pega todas as concluídas
+  const completed = tasks.filter((task) => task.completed === true);
+  
+  // Retorna um novo array juntando as pendentes primeiro, e as concluídas depois
+  return [...pending, ...completed];
+}
