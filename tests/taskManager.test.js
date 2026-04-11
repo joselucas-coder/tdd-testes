@@ -12,6 +12,7 @@ import {
   countPending,
   validatePriority,
   filterByPriority,
+  isDuplicate,
 } from '../src/taskManager.js';
 
 // ============================================================
@@ -158,6 +159,13 @@ describe('addTask', () => {
   it('deve lançar erro para título numérico', () => {
     expect(() => addTask([], 42)).toThrow('Título inválido');
   });
+
+  it('deve lançar erro ao tentar adicionar tarefa duplicada', () => {
+    const tasks = addTask([], 'Estudar');
+    // Tenta adicionar 'estudar' (minúsculo) na lista que já tem 'Estudar'
+    expect(() => addTask(tasks, 'estudar')).toThrow();
+  });
+
 });
 
 // ============================================================
@@ -412,5 +420,24 @@ describe('filterByPriority', () => {
   it('deve retornar array vazio se não encontrar a prioridade', () => {
     const lowTasks = filterByPriority([], 'low');
     expect(lowTasks).toHaveLength(0);
+  });
+});
+
+// ============================================================
+// 9. Duplicadas
+// ============================================================
+describe('isDuplicate', () => {
+  const tasks = [{ title: 'Estudar' }, { title: 'Comprar pão' }];
+
+  it('deve retornar true para título exato', () => {
+    expect(isDuplicate(tasks, 'Estudar')).toBe(true);
+  });
+
+  it('deve retornar true ignorando case e espaços', () => {
+    expect(isDuplicate(tasks, '  estudar  ')).toBe(true);
+  });
+
+  it('deve retornar false se o título não existir', () => {
+    expect(isDuplicate(tasks, 'Trabalhar')).toBe(false);
   });
 });
