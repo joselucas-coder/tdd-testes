@@ -87,3 +87,21 @@ export function filterTasks(tasks, status) {
       return [...tasks]; 
   }
 }
+
+// ------------------------------------------------------------
+// Contagens
+// ------------------------------------------------------------
+
+export function countTasks(tasks) {
+  return tasks.length;
+}
+
+export function countCompleted(tasks) {
+  // Filtra as concluídas e pega o tamanho do array resultante
+  return tasks.filter((task) => task.completed === true).length;
+}
+
+export function countPending(tasks) {
+  // Filtra as não concluídas e pega o tamanho do array resultante
+  return tasks.filter((task) => task.completed === false).length;
+}
