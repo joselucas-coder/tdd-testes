@@ -70,3 +70,20 @@ export function removeTask(tasks, taskId) {
   // O .filter() já retorna um NOVO array, garantindo a imutabilidade
   return tasks.filter((task) => task.id !== taskId);
 }
+
+// ------------------------------------------------------------
+// Filtros
+// ------------------------------------------------------------
+
+export function filterTasks(tasks, status) {
+  switch (status) {
+    case 'completed':
+      return tasks.filter((task) => task.completed === true);
+    case 'pending':
+      return tasks.filter((task) => task.completed === false);
+    case 'all':
+    default:
+      // Retorna uma cópia do array original usando spread para garantir imutabilidade
+      return [...tasks]; 
+  }
+}
